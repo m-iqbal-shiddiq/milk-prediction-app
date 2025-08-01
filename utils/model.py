@@ -4,9 +4,9 @@ import numpy as np
 from tensorflow.keras.applications import VGG16
 
 def load_model():
-    rf_model = joblib.load('../models/rf_base-mae:0.96_r2:0.75.pkl')
-    xgb_model = joblib.load('../models/xgb_best-mae:0.72_r2:0.86.pkl')
-    lgbm_model = joblib.load('../models/lgbm_best-mae:1.02_r2:0.71.pkl')
+    rf_model = joblib.load('./models/rf_base-mae:0.96_r2:0.75.pkl')
+    xgb_model = joblib.load('./models/xgb_best-mae:0.72_r2:0.86.pkl')
+    lgbm_model = joblib.load('./models/lgbm_best-mae:1.02_r2:0.71.pkl')
     
     return rf_model, xgb_model, lgbm_model
 

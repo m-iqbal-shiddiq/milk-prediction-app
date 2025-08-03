@@ -11,8 +11,9 @@ vgg16_model = load_vgg16()
 rf_model, xgb_model, lgbm_model = load_model()
 choquet_weights = np.array([0.21672951, 0.0667899, 0.20563449])
 
-st.title("Prediksi Produksi Susu Sapi")
-st.write("Unggah gambar dan masukkan dimensi untuk memprediksi jumlah susu (liter).")
+st.title("Estimasi Produksi Susu Sapi")
+st.subheader("Algoritma Machine Learning - Fuzzy Integral")
+st.write("Unggah gambar dan masukkan dimensi untuk mengestimasi jumlah susu (liter).")
 
 # File Uploaders
 col1, col2 = st.columns(2)
@@ -41,7 +42,7 @@ lebar = st.number_input("Lebar (cm)", min_value=0.0, format="%.2f", key="lebar")
 tinggi = st.number_input("Tinggi (cm)", min_value=0.0, format="%.2f", key="tinggi")
 
 
-if st.button("Prediksi Susu (Liter)"):
+if st.button("Estimasi Susu (Liter)"):
     if (side_image is not None) and (back_image is not None):
         
         # # Extract features
@@ -71,10 +72,28 @@ if st.button("Prediksi Susu (Liter)"):
         model_prediction = np.array([rf_pred[0], xgb_pred[0], lgbm_pred[0]])
         choquet_result = choquet_integral(choquet_weights, model_prediction)
         
-        st.subheader("📊 Hasil Prediksi:")
+        st.subheader("📊 Hasil Estimasi:")
         st.write(f"🔸 Random Forest: **{rf_pred[0]:.2f} liter**")
         st.write(f"🔸 XGBoost: **{xgb_pred[0]:.2f} liter**")
         st.write(f"🔸 LightGBM: **{lgbm_pred[0]:.2f} liter**")
-        st.success(f"⭐ Prediksi Akhir (Choquet): **{choquet_result:.2f} liter**")
+        st.success(f"⭐ Estimasi Akhir (Choquet): **{choquet_result:.2f} liter**")
     else:
         st.warning("Mohon unggah kedua gambar: Gambar Samping dan Gambar Belakang.")
+
+st.markdown(
+    """
+    <style>
+    .bottom-right-image {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        opacity: 0.9;
+        z-index: 100;
+    }
+    </style>
+    <div class="bottom-right-image">
+        <img src="https://www.deheus.id/contentassets/f5926d4cb9f74e2a91d2545bdc517e48/imagefk73.png" width="240">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
